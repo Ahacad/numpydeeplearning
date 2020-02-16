@@ -23,3 +23,8 @@ Object nn:
         loss = loss_function(y, labels)
         self.backward(loss * -lr)
         
+    def setLayers(self, layers):
+        self.layers = layers
+
+    def appendLayers(self, layers):
+        self.layers.append(layers)
