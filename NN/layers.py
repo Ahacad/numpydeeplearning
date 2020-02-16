@@ -18,3 +18,5 @@ class Dense:
         self.w += np.dot(de_dz, self.x.T)
         self.b += de_dz
         return de_dx
+
+        

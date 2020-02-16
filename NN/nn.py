@@ -28,3 +28,5 @@ Object nn:
 
     def appendLayers(self, layers):
         self.layers.append(layers)
+    
+    

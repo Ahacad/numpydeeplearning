@@ -28,3 +28,11 @@ def reluFunctionDerivate(x):
     return x if x>0 else 0 
 
 relu = Function(reluFunction, reluFunctionDerivate)
+
+def softmax(x):
+    return (np.exp(x-max(x))) / sum(np.exp(x-max(x)))
+
+def softmaxDeviate(x):
+    pass
+
+softmax = Function(softmax, softmaxDeviate)
