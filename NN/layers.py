@@ -19,4 +19,19 @@ class Dense:
         self.b += de_dz
         return de_dx
 
+    
+class FunctionLayer:
+    
+    def __init__(self, activateFunction):
+        self.f = activateFunction
+        self.x = 
         
+    def __call__(self, x):
+        self.z = x
+        return self.f(x)
+    
+    def backward(self, de_da):
+        da_dz = self.f.derivate(de_da)
+        
+        
+        return re_dz
