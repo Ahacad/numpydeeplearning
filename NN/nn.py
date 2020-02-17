@@ -1,10 +1,9 @@
 object nn:
     
-    def __init__(self, layers, input_shape, output_shape):
+    def __init__(self, layers):
         self.layers = layers
         self.layer_number = len(layers)
-        self.input_shape = input_shape
-        self.output_shape = output_shape
+        
 
     def forward(self, x:np.ndarray)->np.ndarray:
         a = x.reshape(self.input_shape)
