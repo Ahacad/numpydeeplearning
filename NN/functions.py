@@ -8,7 +8,7 @@ class Function:
         return self.function(x)
     
     def derivate(self, x):
-        retunr self.functionDerivate(x)
+        return self.functionDerivate(x)
 
 
 
@@ -33,6 +33,6 @@ def softmax(x):
     return (np.exp(x-max(x))) / sum(np.exp(x-max(x)))
 
 def softmaxDeviate(x):
-    pass
+    
 
 softmax = Function(softmax, softmaxDeviate)

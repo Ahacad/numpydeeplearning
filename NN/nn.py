@@ -1,4 +1,4 @@
-Object nn:
+object nn:
     
     def __init__(self, layers, input_shape, output_shape):
         self.layers = layers

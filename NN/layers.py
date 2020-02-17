@@ -24,14 +24,13 @@ class FunctionLayer:
     
     def __init__(self, activateFunction):
         self.f = activateFunction
-        self.x = 
+        self.x = None 
         
     def __call__(self, x):
         self.z = x
         return self.f(x)
     
     def backward(self, de_da):
-        da_dz = self.f.derivate(de_da)
+        de_dz = self.f.derivate(de_da)
         
-        
-        return re_dz
+        return de_dz
