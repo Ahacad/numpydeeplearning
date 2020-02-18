@@ -6,6 +6,8 @@ from nn import *
 from layers import *
 from functions import *
 
+
+#
 def loadMnist(path, kind='train'):
     '''
     import the MNIST dataset from path, which is the path of the folder
@@ -29,4 +31,22 @@ path = '../neuralNetwork/MNIST'
 train, trainLabels = loadMnist(path)
 test, testLabels = loadMnist(path, 't10k')
 
-neural = nn([Dense(784, 200)])
+def computeAccuracy()
+
+
+
+neural = nn([Dense(784, 200), FunctionLayer(relu), Dense(200,10), FunctionLayer(sigmoid)], 784, 10)
+batchSize = 100
+
+for i in range(100):
+    batchData = train[i*batchSize:(i+1)*batchSize]
+    batchLabel = trainLabels[i*batchSize:(i+1)*batchSize]
+    if i % 10 == 0:
+        count = 0 
+        for j in range(batchSize):
+            if int(batchLabel[j]) == int(neural.forward(batchData[j]).argmax()):
+                count += 1
+        print('accuracy = %f' % (count / batchSize))
+    else:
+        for j in range(batchSize):
+            neural.train(batchData[j], batchLabel[j], sse, 0.1)

@@ -1,12 +1,13 @@
 object nn:
     
-    def __init__(self, layers):
+    def __init__(self, layers, inputShape, outputShape):
         self.layers = layers
-        self.layer_number = len(layers)
-        
+        self.layerNumber = len(layers)
+        self.inputShape = inputShape
+        self.outputShape = outputShape
 
     def forward(self, x:np.ndarray)->np.ndarray:
-        a = x.reshape(self.input_shape)
+        a = x.reshape(self.inputShape, 1)
         for layer in self.layers:
             a = layer(a)
         return a
@@ -17,9 +18,9 @@ object nn:
             d = layer.backward(d)
         return d
 
-    def train(self, input_vector, labels, loss_function, lr):
-        y = self.forward(input_vector)
-        loss = loss_function(y, labels)
+    def train(self, inputVector, labels, lossFunction, lr):
+        y = self.forward(inputVector)
+        loss = lossFunction.derivate(y, labels)
         self.backward(loss * -lr)
         
     def setLayers(self, layers):

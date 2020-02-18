@@ -36,3 +36,25 @@ def softmaxDeviate(x):
     
 
 softmax = Function(softmax, softmaxDeviate)
+
+
+class lossFunction:
+    
+    def __init__(self, function, functionDerivate):
+        self.function = function
+        self.functionDerivate = functionDerivate
+
+    def __call__(self, prediction, labels):
+        return self.function(prediction, labels)
+
+    def derivate(self, prediction, labels):
+        return self.functionDerivate(prediction, labels)
+
+
+def l2error(prediction, labels):
+    retunr (labels-prediction)**2
+
+def l2errorDerivate(prediction, labels):
+    return 2*(prediction-labels)
+
+sse = lossFunction(l2error, l2errorDerivate)
