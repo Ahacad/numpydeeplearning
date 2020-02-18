@@ -1,3 +1,4 @@
+import numpy as np
 class Dense:
     
     def __init__(self, input_size, output_size):
@@ -31,6 +32,6 @@ class FunctionLayer:
         return self.f(x)
     
     def backward(self, de_da):
-        de_dz = self.f.derivate(de_da)
-        
+        da_dz = self.f.derivate(de_da)
+        de_dz = np.dot(de_da.T, da_dz)
         return de_dz

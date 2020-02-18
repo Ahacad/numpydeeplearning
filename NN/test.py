@@ -31,9 +31,6 @@ path = '../neuralNetwork/MNIST'
 train, trainLabels = loadMnist(path)
 test, testLabels = loadMnist(path, 't10k')
 
-def computeAccuracy()
-
-
 
 neural = nn([Dense(784, 200), FunctionLayer(relu), Dense(200,10), FunctionLayer(sigmoid)], 784, 10)
 batchSize = 100

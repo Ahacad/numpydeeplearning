@@ -1,3 +1,4 @@
+import numpy as np
 class Function:
 
     def __init__(self, function, functionDerivate):
@@ -22,10 +23,13 @@ def sigmoidFunctionDerivate(x):
 sigmoid = Function(sigmoidFunction, sigmoidFunctionDerivate)
 
 def reluFunction(x):
-    return max(0,x)
+    x[x<=0] = 0
+    return x
 
 def reluFunctionDerivate(x):
-    return x if x>0 else 0 
+    x[x<=0] = 0 
+    x[x>0] = 1
+    return x
 
 relu = Function(reluFunction, reluFunctionDerivate)
 
@@ -33,7 +37,7 @@ def softmax(x):
     return (np.exp(x-max(x))) / sum(np.exp(x-max(x)))
 
 def softmaxDeviate(x):
-    
+    pass
 
 softmax = Function(softmax, softmaxDeviate)
 

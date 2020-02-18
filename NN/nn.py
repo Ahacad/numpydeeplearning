@@ -1,4 +1,5 @@
-object nn:
+import numpy as np
+class nn:
     
     def __init__(self, layers, inputShape, outputShape):
         self.layers = layers
@@ -13,7 +14,7 @@ object nn:
         return a
      
     def backward(self, de_da):
-        d = de_da.reshape(self.output_shape)
+        d = de_da.reshape(self.outputShape,1)
         for layer in self.layers[::-1]:
             d = layer.backward(d)
         return d
