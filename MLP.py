@@ -36,7 +36,6 @@ class Dense:
 
 
     def __call__(self, x):
-        self.x = x.reshape(x.shape[0], 1)
         return np.dot(self.w, x) + self.b
 
     def backward(self, loss):
@@ -62,7 +61,7 @@ def main():
     mlp = nn([Dense(4, 10), Dense(10, 1)])
     testSet = np.array([[1,3,4,5],[2,3,3,1],[13,4,2,3],[1,2,3,4]])
     label = np.array([1,2,3,4])
-    print(mlp.forward(testSet[0]))
+    print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
 
 
 if __name__ == "__main__":
