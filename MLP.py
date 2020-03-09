@@ -16,9 +16,9 @@ class nn:
         for layer in self.layers[::-1]: 
             loss = layer.backward(loss) 
 
-    def train(self, sample, label, lossFunc, lr=0.1):
-        predict = self.forward(sample.reshape(sample.size(), 1))
-        loss = lossFunc(predict, label.reshape(label.size(),1))
+    def train(self, sample, label, lossFunc, lr=0.0001):
+        predict = self.forward(sample)
+        loss = lossFunc.derivate(predict, label)
         self.backward(loss * -lr)
         
     def setLayers(self, layers):
@@ -36,12 +36,16 @@ class Dense:
 
 
     def __call__(self, x):
+        self.x = x
         return np.dot(self.w, x) + self.b
 
     def backward(self, loss):
         res = np.dot(self.w.T, loss)
+        print('selfx     ::', self.x)
         self.w += np.dot(loss, self.x.T)
+        print('selfw     ::',self.w)
         self.b += loss
+        print('selfb     ::',self.b)
         return res
 
 class lossFunction:
@@ -56,13 +60,20 @@ class lossFunction:
 
     def sl(self, x, y):
         return (x-y)**2 
-    
+   
+    def derivate(self, x, y):
+        return 2*(x-y)
+
 def main():
     mlp = nn([Dense(4, 10), Dense(10, 1)])
     testSet = np.array([[1,3,4,5],[2,3,3,1],[13,4,2,3],[1,2,3,4]])
     label = np.array([1,2,3,4])
     print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
-
+    for i in range(1000):
+        print('#######################################################')
+        mlp.train(testSet[0].reshape(testSet[0].shape[0],1), label[0].reshape(1,1), lossFunction())
+    
+    print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
 
 if __name__ == "__main__":
     main()
