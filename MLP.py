@@ -1,4 +1,6 @@
 import numpy as np
+import os
+import struct
 #import matpotlib as plt
 
 
@@ -64,6 +66,21 @@ class lossFunction:
     def derivate(self, x, y):
         return 2*(x-y)
 
+
+def loadMnist(path, kind="train"):
+    labelsPath = os.path.join(path, '%s-labels-idx1-ubyte' % kind)
+    imagesPath = os.path.join(path, '%s-images-idx3-ubyte' % kind)
+
+    with open(labelsPath, 'rb') as labelPath:
+        magic, n = struct.unpack('>II', labelPath.read(8))
+        labels = np.fromfile(labelPath, dtype = np.uint8)
+
+    with open(imagesPath, 'rb') as imagePath:
+        magic, num, rows, cols = struct.unpack('>IIII', imagePath.read(16))
+        images = np.fromfile(imagePath, dtype=np.uint8).reshape(len(labels), 784)
+
+    return images, labels
+'''
 def main():
     mlp = nn([Dense(4, 10), Dense(10, 1)])
     testSet = np.array([[1,3,4,5],[2,3,3,1],[13,4,2,3],[1,2,3,4]])
@@ -74,8 +91,12 @@ def main():
         mlp.train(testSet[0].reshape(testSet[0].shape[0],1), label[0].reshape(1,1), lossFunction())
     
     print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
+'''
 
 if __name__ == "__main__":
-    main()
-
+#    main()
+    images, labels = loadMnist('./datasets/mnist')
+    print("DONE!")
+    print(images[0])
+    print(labels[0])
 
