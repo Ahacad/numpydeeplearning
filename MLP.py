@@ -18,7 +18,7 @@ class nn:
         for layer in self.layers[::-1]: 
             loss = layer.backward(loss) 
 
-    def train(self, sample, label, lossFunc, lr=0.0001):
+    def train(self, sample, label, lossFunc, lr=0.0000001):
         predict = self.forward(sample)
         loss = lossFunc.derivate(predict, label)
         self.backward(loss * -lr)
@@ -43,7 +43,6 @@ class Dense:
 
     def backward(self, loss):
         res = np.dot(self.w.T, loss)
-        print('selfx     ::', self.x)
         self.w += np.dot(loss, self.x.T)
         print('selfw     ::',self.w)
         self.b += loss
@@ -80,23 +79,39 @@ def loadMnist(path, kind="train"):
         images = np.fromfile(imagePath, dtype=np.uint8).reshape(len(labels), 784)
 
     return images, labels
-'''
+
+
+
+def mnistTest():
+    trainSet, trainLabels = loadMnist('./datasets/mnist', 'train')
+    testSet , testLabels  = loadMnist('./datasets/mnist', 'test' )
+    network  = nn([Dense(784, 1000), Dense(1000, 10)])
+    for i in range(5000):
+        network.train(trainSet[i].reshape(-1,1), trainLabels[i].reshape(-1,1), lossFunction())
+
+    count = 0
+    for i in range(100):
+        answer = np.argmax(network.forward(testSet[i].reshape(-1,1)))
+        if answer ==testLabels[i]:
+            count += 1
+        print(answer, testLabels[i])
+    print(count)
+
 def main():
+
+    ''' 
     mlp = nn([Dense(4, 10), Dense(10, 1)])
     testSet = np.array([[1,3,4,5],[2,3,3,1],[13,4,2,3],[1,2,3,4]])
     label = np.array([1,2,3,4])
     print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
     for i in range(1000):
         print('#######################################################')
-        mlp.train(testSet[0].reshape(testSet[0].shape[0],1), label[0].reshape(1,1), lossFunction())
+        mlp.train(testSet[0].reshape(testSet[0].shape[0],1), label[0].reshape(1,1), lossFunction(), lr=0.0001)
     
     print(mlp.forward(testSet[0].reshape(testSet[0].shape[0],1)))
-'''
+    '''
+    mnistTest()
+
 
 if __name__ == "__main__":
-#    main()
-    images, labels = loadMnist('./datasets/mnist')
-    print("DONE!")
-    print(images[0])
-    print(labels[0])
-
+    main()
