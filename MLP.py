@@ -66,6 +66,29 @@ class lossFunction:
         return 2*(x-y)
 
 
+class activateFunction:
+
+    def __init__(self, function = "relu"):
+        if function == "relu":
+            self.function = self.relu
+            self.functionDerivate = self.reluDerivate
+
+    def __call__(self, x):
+        self.x = x
+        return self.function(x)
+
+    def backward(self, loss):
+        return self.functionDerivate(loss)
+
+    def relu(self, x):
+        x[x <= 0] = 0
+        return x
+
+    def reluDerivate(self, loss):
+        loss[loss <= 0] = 0
+        return loss
+
+    
 def loadMnist(path, kind="train"):
     labelsPath = os.path.join(path, '%s-labels-idx1-ubyte' % kind)
     imagesPath = os.path.join(path, '%s-images-idx3-ubyte' % kind)
@@ -86,8 +109,9 @@ def mnistTest():
     trainSet, trainLabels = loadMnist('./datasets/mnist', 'train')
     testSet , testLabels  = loadMnist('./datasets/mnist', 'test' )
     network  = nn([Dense(784, 1000), Dense(1000, 10)])
-    for i in range(5000):
-        network.train(trainSet[i].reshape(-1,1), trainLabels[i].reshape(-1,1), lossFunction())
+    for epoches in range(10):
+       for i in range(50000):
+            network.train(trainSet[i].reshape(-1,1), trainLabels[i].reshape(-1,1), lossFunction())
 
     count = 0
     for i in range(100):
